@@ -9,4 +9,10 @@ Post.create([
     }
 ])
 
+User.create([
+    {
+        username: "janeur_ng"
+    }
+])
+
 puts "✅ Done seeding!"
