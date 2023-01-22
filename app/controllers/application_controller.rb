@@ -32,8 +32,13 @@ class ApplicationController < Sinatra::Base
     posts.to_json
   end
 
+  get "/users" do
+    users = User.all
+    users.to_json
+  end
+
   get "/" do
-    "hello"
+    "Hello World"
   end
 
 end
