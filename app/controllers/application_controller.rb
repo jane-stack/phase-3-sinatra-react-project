@@ -1,7 +1,6 @@
 class ApplicationController < Sinatra::Base
   set :default_content_type, 'application/json'
   
-  # Add your routes here
   delete "/posts/:id" do
     posts = Post.find(params[:id])
     posts.destroy
@@ -12,24 +11,31 @@ class ApplicationController < Sinatra::Base
     posts = Post.find(params[:id])
     posts.update(
       title: params[:title],
-      date: params[:date],
       description: params[:description]
     )
-    posts.to_json
+    posts.to_json(include: :user)
   end
 
   post "/posts" do
     posts = Post.create(
       title: params[:title],
       date: params[:date],
-      description: params[:description]
+      description: params[:description],
+      user_id: params[:user_id]
     )
-    posts.to_json
+    posts.to_json(include: :user)
+  end
+
+  post "/users" do 
+    users = User.find_or_create_by(
+      username: params[:username]
+    )
+    users.to_json
   end
 
   get "/posts" do
     posts = Post.all
-    posts.to_json
+    posts.to_json(include: :user)
   end
 
   get "/users" do
